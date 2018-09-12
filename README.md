@@ -9,35 +9,25 @@ The topic of this challenge will be determining if two images belong to the same
 
 The goal of this challenge is to build a system for determining if two images belong to the same person or not by "fusing" multiple algorithms. In particular, for a given image pair, you will be provided the scores obtained from **14** different algorithms, each of which has a different computational complexity.   
 
-Then the aim is to combine the scores of these algorithms (in a way that will be described in the sequel) in order to obtain a better classification accuracy. However, there will be a strict **computational budget**, such the running times of the algorithms that you combine **cannot exceed a certain time threshold**. For example, let $t_i$ denote the running time of algorithm $i$ in milliseconds ($i = 1,\dots,14$). Then, you will be given a threshold, $T$, such that the total computational time of the algorithms that you combine will not exceed $T$: 
+Then the aim is to combine the scores of these algorithms (in a way that will be described in the sequel) in order to obtain a better classification accuracy. However, there will be a strict **computational budget**, such the running times of the algorithms that you combine **cannot exceed a certain time threshold**.
 
-$
-\sum_{i\in C} t_i \leq T,
-$
-
-where $C \subset \{1,\dots,14\}$ is the set of algorithms that you choose to combine. The idea in such fusion is that "combining several fast algorithms might be better than using a single slow (possible more complex) algorithm". 
+The idea in such fusion is that "combining several fast algorithms might be better than using a single slow (possible more complex) algorithm". 
 
 Before we describe how the fusion will be done, let us introduce the data:
 
 **Training data:**
 
-There will be $N= 2048853$ image pairs in the dataset. For a given image pair $n \in \{1,\dots,N\}$, we define $y_n = 1$ if this image pair belongs to the same person, or $y_n=0$ otherwise.
+There will be 2 048 853 image pairs in the dataset. For a given image pair, we define y=1 if this image pair belongs to the same person, or y=0 otherwise.
 
-We then define a vector of scores for each image pair, $s_n \in \mathbb{R}_+^{14}$, such that $i$th component of $s_n$ will encode the score obtained by the $i$th algorithm, for the given image pair.  
+We then define a vector of scores for each image pair, such that one component of this vector will encode the score obtained by one algorithm, for the given image pair.  
 
 **Test data:**
 
-The test data contain $N_\text{test} = 170738$ image pairs. Similarly to the training data, each image pair contains a label and a vector of scores that are obtained from $14$ different algorithms. The test data will not be provided.
+The test data contain 170 738 image pairs. Similarly to the training data, each image pair contains a label and a vector of scores that are obtained from 14 different algorithms. The test data will not be provided.
 
 ### Fusion Method 
 
-In this challenge, you are expected to build a fusion system that is given as follows. Given a score vector $s \in \mathbb{R}_+^{14}$, we first define an extended vector $s'$, by appending a $1$ in the beginning of the original vector $s\in \mathbb{R}_+^{15}$: $s' = [1, s]$. Then we use the following fusion scheme in order to obtain the combined score $\hat{s}$: 
-
-$
-\hat{s} = s'^\top M s' 
-$
-
-where $M \in \mathbb{R}^{15 \times 15}$, is the "fusion matrix". This matrix will enable you to combine the scores of the different algorithms in a linear or a quadratic way. 
+In this challenge, you are expected to build a fusion system that is given as follows. Given a score vector **s**, we first define an extended vector **s’**, by appending a **1** in the beginning of the original vector. Then we use a « fusion matrix » **M** in order to obtain the combined score. This matrix will enable you to combine the scores of the different algorithms in a linear or a quadratic way. 
 
 ### The goal and the performance criterion
 
